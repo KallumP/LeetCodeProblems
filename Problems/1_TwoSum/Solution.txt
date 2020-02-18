@@ -1,0 +1,27 @@
+public class Solution {
+    public int[] TwoSum(int[] nums, int target) {
+        
+        int[] indices = new int[2];
+        
+        for(int i = 0; i < nums.Length; i++){
+            
+            //calculates what number is needed to get to the target
+            int toget = target - nums[i];
+            
+            
+            for(int j = i + 1; j < nums.Length; j++){
+                
+             
+                if (nums[j] == toget){
+                    
+                    indices[0] = i;
+                    indices[1] = j;
+                    
+                    return indices;
+                }
+            }
+        }
+        
+        return null;
+    }
+}
