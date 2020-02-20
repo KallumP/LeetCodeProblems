@@ -1,0 +1,137 @@
+
+
+    class Program {
+        static void Main(string[] args) {
+            Solution s = new Solution();
+
+            //ListNode l1 = new ListNode(2);
+            //ListNode l2 = new ListNode(5);
+
+            //ListNode l11 = new ListNode(4);
+            //ListNode l12 = new ListNode(3);
+
+            //ListNode l21 = new ListNode(6);
+            //ListNode l22 = new ListNode(4);
+
+            //l1.NextNode(l11);
+            //l11.NextNode(l12);
+
+
+            //l2.NextNode(l21);
+            //l21.NextNode(l22);
+
+            List<ListNode> l1List = new List<ListNode>();
+            ListNode l1 = s.NumToList(9, l1List);
+
+            List<ListNode> l2List = new List<ListNode>();
+            ListNode l2 = s.NumToList(9999999991, l2List);
+
+            ListNode answer = s.AddTwoNumbers(l1, l2);
+
+            Console.WriteLine(s.ListToNum(answer));
+            Console.Read();
+        }
+    }
+
+ public class Solution {
+
+        //used to store the nodes
+        List<ListNode> nodes = new List<ListNode>();
+
+        public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
+
+            long firstNum = ListToNum(l1);
+
+            long secondNum = ListToNum(l2);
+
+            //adds the two numbers
+            long add = firstNum + secondNum;
+
+            if (add != 0)
+                return NumToList(add, nodes);
+            else
+                return new ListNode(0);
+        }
+
+        //Turns a list into an int
+        public long ListToNum(ListNode node) {
+
+            ListNode current = node;
+            int power = 0;
+            long num = 0;
+
+            //keeps looping while the node exists
+            while (current != null) {
+
+                //takes the next number
+                num += current.val * (long)Math.Pow(10, power);
+
+                //increases what power to use
+                power++;
+
+                //takes the next node
+                current = current.next;
+            }
+
+            return num;
+        }
+
+        //turns an int into a list
+        public ListNode NumToList(long num, List<ListNode> list) {
+
+            //saves the original value
+            long value = num;
+
+            //sets the remainder (when divided by 1)
+            long remainder = value;
+
+            //an array of ints used to store the individual digits
+            List<int> digits = new List<int>();
+
+            //gets the length of the input
+            int inputLength = GetNumLength(num);
+
+            //loops from the biggest digit to the smallest
+            for (int i = inputLength - 1; i >= 0; i--) {
+
+                //divides by 10^i to get the biggest current digit
+                digits.Add((int)(remainder / (long)Math.Pow(10, i)));
+
+                //saves the same number (but now without the biggest digit 
+                //(by taking the remainder of the above division)
+                remainder = value % (long)(Math.Pow(10, i));
+            }
+
+            //loops through each of the digits
+            for (int i = digits.Count - 1; i >= 0; i--) {
+
+                //adds the current integer as a node
+                list.Add(new ListNode(digits[i]));
+
+                //checks if there was a previous node
+                if (list.Count - 2 != -1)
+
+                    //adds the current node to the previous node's next node
+                    list[list.Count - 2].next = list[list.Count - 1];
+
+            }
+
+            return list[0];
+        }
+
+
+        //finds the length of the input
+        public int GetNumLength(long val) {
+
+            //loops through the valid numbers (for an int)
+            for (int i = 20; i >= 0; i--)
+
+                //checks if the division by the power of the current iteration returns a number
+                if (val / (long)Math.Pow(10, i) != 0)
+
+                    //returns the number of digits that were entered
+                    return i + 1;
+
+            return -1;
+        }
+    }
