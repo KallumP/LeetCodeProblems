@@ -1,0 +1,5 @@
+How to know when not to remove the leap year 
+when the starting date is on a leap year, and after feb, i need to know if i have to keep or remove the leap day
+
+remove all but the last input
+breakpoint to see if the leap day is removed before the years are calcuated

@@ -1,0 +1,166 @@
+using System;
+
+namespace Challenge1 {
+    class Program {
+        static void Main(string[] args) {
+            Console.WriteLine("Hello World!");
+        }
+    }
+
+    public class Solution {
+        public int DaysBetweenDates(string date1, string date2) {
+
+            int year1;
+            int month1;
+            int day1;
+
+            year1 = Convert.ToInt16(date1.Substring(0, 4));
+            month1 = Convert.ToInt16(date1.Substring(4, 2));
+            day1 = Convert.ToInt16(date1.Substring(7, 2));
+
+
+            int year2;
+            int month2;
+            int day2;
+
+            year2 = Convert.ToInt16(date2.Substring(0, 4));
+            month2 = Convert.ToInt16(date2.Substring(4, 2));
+            day2 = Convert.ToInt16(date2.Substring(7, 2));
+
+            bool date1Big = true;
+            bool nodiff = false;
+
+            //checks to see if date 1 was bigger
+            if (year1 > year2)
+                date1Big = true;
+
+            //checks to see if date 2 was bigger
+            else if (year1 < year2)
+                date1Big = false;
+
+            //checks to see if the two dates had the same year
+            else if (year1 == year2) {
+
+                //checks to see if the date 1 was bigger
+                if (month1 > month2)
+                    date1Big = true;
+
+                //checks to see if date 2 was bigger
+                else if (month1 < month2)
+                    date1Big = false;
+
+                //checks to see if the two dates had the same month (as well as year)
+                else if (month1 == month2) {
+
+                    //checks to see if the date 1 was bigger
+                    if (day1 > day2)
+                        date1Big = true;
+
+                    //checks to see if date 2 was bigger
+                    else if (day1 < day2)
+                        date1Big = false;
+
+                    //checks to see if the two dates were the same
+                    else if (day1 == day2)
+                        nodiff = true;
+
+                }
+            }
+
+            int yearsPassed = 0;
+            int monthsPassed = 0;
+            int daysPassed = 0;
+
+
+            //checks to see if there was a difference to be registered
+            if (!nodiff) {
+
+                //checks to see if date one was bigger
+                if (date1Big)
+                    yearsPassed = diff(year1, year2);
+
+                else
+                    yearsPassed = diff(year2, year1);
+
+
+
+                if (year1 > year2) {
+
+                    //figures out how many months past the year in the bigger date
+                    monthsPassed += month1;
+
+                    //figures out how many months to finish the smaller date's year
+                    monthsPassed += 12 - month2;
+
+
+                } else if (year1 < year2) {
+
+                    //figures out how many months past the year in the bigger date
+                    monthsPassed += month2;
+
+                    //figures out how many months to finish the smaller date's year
+                    monthsPassed += 12 - month1;
+                } else {
+
+
+                    //checks to see if date one was bigger
+                    if (date1Big)
+                        yearsPassed = diff(month1, month2);
+
+                    else
+                        yearsPassed = diff(month2, month1);
+                }
+
+
+                if (year1 > year2) {
+
+                    //figures out how many months past the year in the bigger date
+                    monthsPassed += month1;
+
+                    //figures out how many months to finish the smaller date's year
+                    monthsPassed += 12 - month2;
+
+
+                } else if (year1 < year2) {
+
+                    //figures out how many months past the year in the bigger date
+                    monthsPassed += month2;
+
+                    //figures out how many months to finish the smaller date's year
+                    monthsPassed += 12 - month1;
+                } else {
+
+
+                    //checks to see if date one was bigger
+                    if (date1Big)
+                        monthsPassed = diff(month1, month2);
+
+                    else
+                        monthsPassed = diff(month2, month1);
+                }
+
+
+
+
+
+            }
+
+            //adds on the days from each year that passed
+            daysPassed += (yearsPassed * 365);
+
+            //adds on the days from each month that passed
+            daysPassed += (monthsPassed * 30);
+
+
+            return daysPassed;
+
+        }
+
+        //calculates the difference between the bigest and smallest numbers
+        int diff(int big, int small) {
+
+            return big - small;
+
+        }
+    }
+}
